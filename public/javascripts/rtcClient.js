@@ -35,14 +35,17 @@ var PeerManager = (function () {
         });
       }
     };
+
     peer.pc.onaddstream = function(event) {
       attachMediaStream(peer.remoteVideoEl, event.stream);
       remoteVideosContainer.appendChild(peer.remoteVideoEl);
     };
+
     peer.pc.onremovestream = function(event) {
       peer.remoteVideoEl.src = '';
       remoteVideosContainer.removeChild(peer.remoteVideoEl);
     };
+
     peer.pc.oniceconnectionstatechange = function(event) {
       switch(
       (  event.srcElement // Chrome
@@ -57,27 +60,30 @@ var PeerManager = (function () {
         
     return peer;
   }
-  function answer(remoteId) {
+
+  function answer (remoteId) {
     var pc = peerDatabase[remoteId].pc;
     pc.createAnswer(
-      function(sessionDescription) {
+      function (sessionDescription) {
         pc.setLocalDescription(sessionDescription);
         send('answer', remoteId, sessionDescription);
       }, 
       error
     );
   }
-  function offer(remoteId) {
+
+  function offer (remoteId) {
     var pc = peerDatabase[remoteId].pc;
     pc.createOffer(
-      function(sessionDescription) {
+      function (sessionDescription) {
         pc.setLocalDescription(sessionDescription);
         send('offer', remoteId, sessionDescription);
       }, 
       error
     );
   }
-  function handleMessage(message) {
+
+  function handleMessage (message) {
     var type = message.type,
         from = message.from,
         pc = (peerDatabase[from] || addPeer(from)).pc;
@@ -105,6 +111,11 @@ var PeerManager = (function () {
           }), function(){}, error);
         }
         break;
+      case 'chatmessage':
+        var chat = document.getElementById('chatArea');
+        //chat.append(message.payload.chatdata);
+        chat.innerHTML = chat.innerHTML + message.payload.chatdata + '</br>';
+      break;
     }
   }
   function send(type, to, payload) {
@@ -162,6 +173,13 @@ var PeerManager = (function () {
 
     send: function(type, payload) {
       socket.emit(type, payload);
+    },
+
+    sendChatMessage: function(to, msg){
+      var payload = {};
+      payload.type = 'chatmessage';
+      payload.message = msg;
+      send('chatmessage', to, payload);
     }
   };
   

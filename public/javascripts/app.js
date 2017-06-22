@@ -21,7 +21,7 @@
 				attachMediaStream(camera.preview, stream);
 				client.setLocalStream(stream);
 				camera.stream = stream;
-				$rootScope.$broadcast('cameraIsOn',true);
+				$rootScope.$broadcast('cameraIsOn', true);
 			})
 			.catch(Error('Failed to get access to local media.'));
 		};
@@ -29,9 +29,9 @@
     		return new Promise(function(resolve, reject){			
 				try {
 					//camera.stream.stop() no longer works
-          for( var track in camera.stream.getTracks() ){
-            track.stop();
-          }
+					for( var track in camera.stream.getTracks() ){
+						track.stop();
+					}
 					camera.preview.src = '';
 					resolve();
 				} catch(error) {
@@ -39,15 +39,29 @@
 				}
     		})
     		.then(function(result){
-    			$rootScope.$broadcast('cameraIsOn',false);
+    			$rootScope.$broadcast('cameraIsOn', false);
     		});	
 		};
 		return camera;
     }]);
 
-	app.controller('RemoteStreamsController', ['camera', '$location', '$http', function(camera, $location, $http){
+	app.controller('RemoteStreamsController', ['camera', '$location', '$http', '$rootScope', function(camera, $location, $http, $rootScope){
 		var rtc = this;
 		rtc.remoteStreams = [];
+		rtc.chatMessages = ["init"];
+		
+		$rootScope.$on('newMessage', function() {
+			rtc.chatMessages.push("hola");
+		});
+		rtc.saveMsg = function(msg){
+			rtc.chatMessages.push(msg);
+		}
+
+		rtc.sendMsg = function(id, msg){
+			console.log('enviando mensaje a ' + id);
+			client.sendChatMessage(id, msg)
+		}
+
 		function getStreamById(id) {
 		    for(var i=0; i<rtc.remoteStreams.length;i++) {
 		    	if (rtc.remoteStreams[i].id === id) {return rtc.remoteStreams[i];}
@@ -121,7 +135,7 @@
 		localStream.link = '';
 		localStream.cameraIsOn = false;
 
-		$scope.$on('cameraIsOn', function(event,data) {
+		$scope.$on('cameraIsOn', function(event, data) {
     		$scope.$apply(function() {
 		    	localStream.cameraIsOn = data;
 		    });
