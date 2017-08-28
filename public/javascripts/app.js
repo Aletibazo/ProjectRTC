@@ -53,13 +53,19 @@
 		$rootScope.$on('newMessage', function() {
 			rtc.chatMessages.push("hola");
 		});
+
 		rtc.saveMsg = function(msg){
 			rtc.chatMessages.push(msg);
 		}
 
-		rtc.sendMsg = function(id, msg){
+		rtc.sendMsg = function(id){
 			console.log('enviando mensaje a ' + id);
-			client.sendChatMessage(id, msg)
+			var msg = rtc.chatTextBox;
+			client.sendChatMessage(id, msg);
+			rtc.chatTextBox = '';
+
+			var chat = document.getElementById('chatArea');
+			chat.innerHTML = chat.innerHTML + "Me : " + msg + '</br>';
 		}
 
 		function getStreamById(id) {

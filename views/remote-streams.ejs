@@ -27,6 +27,7 @@
             {{line}}
         </p>
     </div>
-    <button ng-click="rtc.saveMsg('hola')" />
-    <button ng-click="rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id, 'KappaPride')" > Enviar Mensaje </button>
+    <p><input ng-model="rtc.chatTextBox" ng-keydown="$event.keyCode == 13 && rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" />
+    <button ng-click="rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" > Enviar Mensaje </button>
+    </p>
 <div class="remoteStreams">

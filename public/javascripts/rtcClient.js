@@ -114,7 +114,7 @@ var PeerManager = (function () {
       case 'chatmessage':
         var chat = document.getElementById('chatArea');
         //chat.append(message.payload.chatdata);
-        chat.innerHTML = chat.innerHTML + message.payload.chatdata + '</br>';
+        chat.innerHTML = chat.innerHTML + "Him : " + message.payload.chatdata + '</br>';
       break;
     }
   }
