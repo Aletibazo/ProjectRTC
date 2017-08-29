@@ -44,6 +44,7 @@ var PeerManager = (function () {
     peer.pc.onremovestream = function(event) {
       peer.remoteVideoEl.src = '';
       remoteVideosContainer.removeChild(peer.remoteVideoEl);
+      document.getElementById('chat').style.visibility = "hidden";
     };
 
     peer.pc.oniceconnectionstatechange = function(event) {
