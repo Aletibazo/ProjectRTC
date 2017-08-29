@@ -48,7 +48,7 @@
 	app.controller('RemoteStreamsController', ['camera', '$location', '$http', '$rootScope', function(camera, $location, $http, $rootScope){
 		var rtc = this;
 		rtc.remoteStreams = [];
-		rtc.chatMessages = ["Bienvenido al puto chat"];
+		rtc.chatMessages = ["Bienvenido al chat"];
 		rtc.activeStream; // Contiene el Stream que se está visualizando
 		
 		$rootScope.$on('newMessage', function() {
