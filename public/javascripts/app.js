@@ -48,7 +48,8 @@
 	app.controller('RemoteStreamsController', ['camera', '$location', '$http', '$rootScope', function(camera, $location, $http, $rootScope){
 		var rtc = this;
 		rtc.remoteStreams = [];
-		rtc.chatMessages = ["init"];
+		rtc.chatMessages = ["Bienvenido al puto chat"];
+		rtc.activeStream; // Contiene el Stream que se está visualizando
 		
 		$rootScope.$on('newMessage', function() {
 			rtc.chatMessages.push("hola");
@@ -59,13 +60,20 @@
 		}
 
 		rtc.sendMsg = function(id){
-			console.log('enviando mensaje a ' + id);
+			
 			var msg = rtc.chatTextBox;
+			if (msg == ''){
+				console.log('Mensaje vacío, no se envía');
+				return;
+			}
 			client.sendChatMessage(id, msg);
+			console.log('enviando mensaje a ' + id);
 			rtc.chatTextBox = '';
 
 			var chat = document.getElementById('chatArea');
 			chat.innerHTML = chat.innerHTML + "Me : " + msg + '</br>';
+
+			chat.scrollTop = chat.scrollHeight;
 		}
 
 		function getStreamById(id) {
@@ -91,8 +99,11 @@
 		};
 
 		rtc.view = function(stream){
+			rtc.activeStream = stream.id;
 			client.peerInit(stream.id);
 			stream.isPlaying = !stream.isPlaying;
+
+			document.getElementById('chat').style.visibility = "visible";
 		};
 		rtc.call = function(stream){
 			/* If json isn't loaded yet, construct a new stream 

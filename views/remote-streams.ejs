@@ -6,14 +6,14 @@
     <table>
         <thead>
             <tr>
-                <th>Stream</th><th>1-way</th><th>2-way</th>
+                <th>Stream</th><th>1-way</th><!--<th>2-way</th>-->
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="stream in rtc.remoteStreams" ng-class="{'selected' : stream.isPlaying}">
                 <td><a>{{stream.name}}</a></td>
                 <td ng-click="rtc.view(stream)"><a>View</a></td>
-                <td ng-click="rtc.call(stream)"><a>Call</a></td>
+                <!-- <td ng-click="rtc.call(stream)"><a>Call</a></td> -->
             </tr>
         </tbody>
     </table>
@@ -22,12 +22,15 @@
         <a href>Refresh</a>
     </li>
 
-    <div id="chatArea" style="overflow-y:scroll; height:100px;>
-        <p ng-repeat="line in rtc.chatMessages"> 
-            {{line}}
+    <div id="chat">
+        <div id="chatArea">
+            <p ng-repeat="line in rtc.chatMessages"> 
+                {{line}}
+            </p>
+        </div>
+
+        <p><input value='' ng-model="rtc.chatTextBox" ng-keydown="$event.keyCode == 13 && rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" />
+        <button ng-click="rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" > Enviar </button>
         </p>
     </div>
-    <p><input ng-model="rtc.chatTextBox" ng-keydown="$event.keyCode == 13 && rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" />
-    <button ng-click="rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" > Enviar Mensaje </button>
-    </p>
 <div class="remoteStreams">

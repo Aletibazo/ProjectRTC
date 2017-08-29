@@ -63,3 +63,14 @@ li:hover {
 .footer {
    clear: both;
 }
+
+#chat{
+  visibility: hidden;
+}
+
+#chatArea{
+  overflow-y:auto; 
+  height:100px;
+  text-align: left;
+}
+
