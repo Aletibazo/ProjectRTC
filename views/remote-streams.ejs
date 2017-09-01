@@ -27,12 +27,10 @@
             </p>
         </div>
 
-        <p><input value='' ng-model="rtc.chatTextBox" ng-keydown="$event.keyCode == 13 && rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" />
-        <button ng-click="rtc.sendMsg(rtc.remoteStreams[rtc.remoteStreams.length-1].id)" > Enviar </button>
+        <p><input value='' ng-model="rtc.chatTextBox" ng-keydown="$event.keyCode == 13 && rtc.sendMsg(rtc.remoteStreams[rtc.activeStream.id)" />
+        <button ng-click="rtc.sendMsg(rtc.activeStream.id)" > Enviar </button>
         </p>
     </div>
-
-
-<div class="remoteStreams">
+</div>
 
 <div id="remoteVideosContainer"></div>

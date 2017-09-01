@@ -87,7 +87,7 @@ var PeerManager = (function () {
   function handleMessage (message) {
     var type = message.type,
         from = message.from,
-        pc = (peerDatabase[from] || addPeer(from)).pc;
+        pc = (peerDatabasel[from] || addPeer(from)).pc;
 
     console.log('received ' + type + ' from ' + from);
   
@@ -119,6 +119,7 @@ var PeerManager = (function () {
       break;
     }
   }
+
   function send(type, to, payload) {
     console.log('sending ' + type + ' to ' + to);
 
@@ -128,11 +129,13 @@ var PeerManager = (function () {
       payload: payload
     });
   }
+
   function toggleLocalStream(pc) {
     if(localStream) {
       (!!pc.getLocalStreams().length) ? pc.removeStream(localStream) : pc.addStream(localStream);
     }
   }
+  
   function error(err){
     console.log(err);
   }
