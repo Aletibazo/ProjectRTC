@@ -17,8 +17,8 @@ module.exports = function(io, streams) {
       
     client.on('readyToStream', function(options) {
       console.log('-- ' + client.id + ' is ready to stream --');
-      
-      streams.addStream(client.id, options.name); 
+        streams.addStream(client.id, options.name); 
+      }
     });
     
     client.on('update', function(options) {

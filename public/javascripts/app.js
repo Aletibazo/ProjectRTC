@@ -99,10 +99,11 @@
 		};
 
 		rtc.view = function(stream){
-			rtc.activeStream = stream;
-
 			client.peerInit(stream.id);
 			stream.isPlaying = !stream.isPlaying;
+
+			rtc.activeStream = stream.id;
+			console.log("Stream activo es " + rtc.activeStream);
 
 			var chat = document.getElementById('chatArea');
         	chat.innerHTML = '';

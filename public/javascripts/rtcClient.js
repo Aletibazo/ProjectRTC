@@ -87,7 +87,7 @@ var PeerManager = (function () {
   function handleMessage (message) {
     var type = message.type,
         from = message.from,
-        pc = (peerDatabasel[from] || addPeer(from)).pc;
+        pc = (peerDatabase[from] || addPeer(from)).pc;
 
     console.log('received ' + type + ' from ' + from);
   
@@ -115,7 +115,7 @@ var PeerManager = (function () {
       case 'chatmessage':
         var chat = document.getElementById('chatArea');
         //chat.append(message.payload.chatdata);
-        chat.innerHTML = chat.innerHTML + from + " : " + message.payload.chatdata + '</br>';
+        chat.innerHTML = chat.innerHTML + message.payload.from + " : " + message.payload.chatdata + '</br>';
       break;
     }
   }
